@@ -1,5 +1,6 @@
 package com.inxedu.os.edu.controller.course;
 
+import com.inxedu.os.common.ali.PlayAddress;
 import com.inxedu.os.common.controller.BaseController;
 import com.inxedu.os.common.util.ObjectUtils;
 import com.inxedu.os.common.util.StringUtils;
@@ -81,7 +82,11 @@ public class CourseKpointController extends BaseController {
 					model.addAttribute("ccwebsitemap", map);
 				}
 				// 放入数据
-				model.addAttribute("videourl", videourl);
+
+				String playAddress = PlayAddress.getPlayAddress(videourl);
+
+
+				model.addAttribute("videourl", playAddress);
 				model.addAttribute("videotype", videotype);
 				return getKopintHtml;
 			}

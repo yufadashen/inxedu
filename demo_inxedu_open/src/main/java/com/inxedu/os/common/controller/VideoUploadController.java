@@ -1,5 +1,10 @@
 package com.inxedu.os.common.controller;
 
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.vod.model.v20170321.CreateUploadVideoRequest;
+import com.aliyuncs.vod.model.v20170321.CreateUploadVideoResponse;
+import com.aliyuncs.vod.model.v20170321.RefreshUploadVideoRequest;
+import com.aliyuncs.vod.model.v20170321.RefreshUploadVideoResponse;
 import com.inxedu.os.common.constants.CommonConstants;
 import com.inxedu.os.common.util.DateUtils;
 import com.inxedu.os.common.util.FileUploadUtils;
@@ -9,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+
+import static com.inxedu.os.common.ali.PlayAddress.initVodClient;
 
 /**
  * @author www.inxedu.com
@@ -33,6 +41,44 @@ public class VideoUploadController extends BaseController{
 	private String getProjectRootDirPath(HttpServletRequest request){
 		return request.getSession().getServletContext().getRealPath("/");
 
+	}
+
+
+
+	@ResponseBody
+	@RequestMapping(value="/getVideoId",method={RequestMethod.GET})
+	public CreateUploadVideoResponse getVideoId(String title,String fileName){
+		DefaultAcsClient client = initVodClient();
+		CreateUploadVideoResponse response = new CreateUploadVideoResponse();
+		try {
+			CreateUploadVideoRequest request = new CreateUploadVideoRequest();
+			request.setTitle(title);
+			request.setFileName(fileName);
+			response = client.getAcsResponse(request);
+			System.out.print("VideoId = " + response.getVideoId() + "\n");
+			System.out.print("UploadAddress = " + response.getUploadAddress() + "\n");
+			System.out.print("UploadAuth = " + response.getUploadAuth() + "\n");
+		} catch (Exception e) {
+			System.out.print("ErrorMessage = " + e.getLocalizedMessage());
+		}
+		System.out.print("RequestId = " + response.getRequestId() + "\n");
+		return response;
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/refreshVideoId",method={RequestMethod.GET})
+	public RefreshUploadVideoResponse refreshVideoId(String videoId){
+		DefaultAcsClient client = initVodClient();
+		RefreshUploadVideoResponse response = new RefreshUploadVideoResponse();
+		try {
+			RefreshUploadVideoRequest request = new RefreshUploadVideoRequest();
+			request.setVideoId(videoId);
+			response = client.getAcsResponse(request);
+		} catch (Exception e) {
+			System.out.print("ErrorMessage = " + e.getLocalizedMessage());
+		}
+		System.out.print("RequestId = " + response.getRequestId() + "\n");
+		return response;
 	}
 
 	/**

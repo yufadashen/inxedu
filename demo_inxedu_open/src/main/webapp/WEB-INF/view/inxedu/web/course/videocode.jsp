@@ -8,7 +8,7 @@
 		<script type="text/javascript" src="/static/common/ckplayer/ckplayer.js" charset="utf-8"></script>
 		<div id="videoareaname" style="width: 100%;height: 100%"></div>
 		<script type="text/javascript">
-			debugger;
+            debugger;
             var flashvars={
                 f:'${videourl}',
                 c:0,

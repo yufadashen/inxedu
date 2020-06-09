@@ -76,7 +76,10 @@
                 }
             });
         }
-        function setBlogrollImageName(uploadInfo) {
+        function setBlogrollImageName(uploadInfo){
+
+        }
+  /*      function setBlogrollImageName(uploadInfo) {
             var uploader = new AliyunUpload.Vod({
                 //阿里账号ID，必须有值 ，值的来源https://help.aliyun.com/knowledge_detail/37196.html
                 userId:"1753139843658599",
@@ -129,7 +132,7 @@
                 }
             });
 
-        }
+        }*/
 
         /**
          * 音频上传控件加载
@@ -176,6 +179,179 @@
                 }
             });
         }
+        //兼容IE11
+        if (!FileReader.prototype.readAsBinaryString) {
+            FileReader.prototype.readAsBinaryString = function (fileData) {
+                var binary = "";
+                var pt = this;
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var bytes = new Uint8Array(reader.result);
+                    var length = bytes.byteLength;
+                    for (var i = 0; i < length; i++) {
+                        binary += String.fromCharCode(bytes[i]);
+                    }
+                    //pt.result  - readonly so assign binary
+                    pt.content = binary;
+                    pt.onload()
+                }
+                reader.readAsArrayBuffer(fileData);
+            }
+        }
+        $(document).ready(function () {
+            /**
+             * 创建一个上传对象
+             * 使用 UploadAuth 上传方式
+             */
+            function createUploader () {
+                var uploader = new AliyunUpload.Vod({
+                    timeout: 60000,
+                    partSize: 1048576,
+                    parallel:  5,
+                    retryCount:  3,
+                    retryDuration:  2,
+                    region: "cn-shanghai",
+                    userId: "1753139843658599",
+                    // 添加文件成功
+                    addFileSuccess: function (uploadInfo) {
+                        console.log('addFileSuccess')
+                        $('#authUpload').attr('disabled', false)
+                        $('#resumeUpload').attr('disabled', false)
+                        $('#status').text('添加文件成功, 等待上传...')
+                        console.log("addFileSuccess: " + uploadInfo.file.name)
+                    },
+                    // 开始上传
+                    onUploadstarted: function (uploadInfo) {
+                        // 如果是 UploadAuth 上传方式, 需要调用 uploader.setUploadAuthAndAddress 方法
+                        // 如果是 UploadAuth 上传方式, 需要根据 uploadInfo.videoId是否有值，调用点播的不同接口获取uploadauth和uploadAddress
+                        // 如果 uploadInfo.videoId 有值，调用刷新视频上传凭证接口，否则调用创建视频上传凭证接口
+                        // 注意: 这里是测试 demo 所以直接调用了获取 UploadAuth 的测试接口, 用户在使用时需要判断 uploadInfo.videoId 存在与否从而调用 openApi
+                        // 如果 uploadInfo.videoId 存在, 调用 刷新视频上传凭证接口(https://help.aliyun.com/document_detail/55408.html)
+                        // 如果 uploadInfo.videoId 不存在,调用 获取视频上传地址和凭证接口(https://help.aliyun.com/document_detail/55407.html)
+                        if (!uploadInfo.videoId) {
+                            var createUrl ="${ctximg}/video/getVideoId?title="+ uploadInfo.file.name+"&fileName="+uploadInfo.file.name;
+                            $.get(createUrl, function (data) {
+                                console.log(data)
+                                var uploadAuth = data.uploadAuth
+                                var uploadAddress = data.uploadAddress
+                                var videoId = data.videoId
+                                uploader.setUploadAuthAndAddress(uploadInfo, uploadAuth, uploadAddress,videoId)
+                                $('#videourl').val(uploadInfo.videoId);
+                            }, 'json')
+                            $('#status').text('文件开始上传...')
+                            console.log("onUploadStarted:" + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object)
+                        } else {
+                            // 如果videoId有值，根据videoId刷新上传凭证
+                            // https://help.aliyun.com/document_detail/55408.html?spm=a2c4g.11186623.6.630.BoYYcY
+                            var refreshUrl = "${ctximg}/video/refreshVideoId?videoId="+ uploadInfo.videoId;//'https://demo-vod.cn-shanghai.aliyuncs.com/voddemo/RefreshUploadVideo?BusinessType=vodai&TerminalType=pc&DeviceModel=iPhone9,2&UUID=59ECA-4193-4695-94DD-7E1247288&AppVersion=1.0.0&Title=haha1&FileName=xxx.mp4&VideoId=' + uploadInfo.videoId
+                            $.get(refreshUrl, function (data) {
+                                var uploadAuth = data.uploadAuth
+                                var uploadAddress = data.uploadAddress
+                                var videoId = data.videoId
+                                uploader.setUploadAuthAndAddress(uploadInfo, uploadAuth, uploadAddress,videoId)
+                                $('#videourl').val(uploadInfo.videoId);
+                            }, 'json')
+                        }
+                    },
+                    // 文件上传成功
+                    onUploadSucceed: function (uploadInfo) {
+                        console.log("*******onUploadSucceed: " + uploadInfo.file.name + ", endpoint:" + uploadInfo.endpoint + ", bucket:" + uploadInfo.bucket + ", object:" + uploadInfo.object)
+                        $('#status').text('文件上传成功!')
+                    },
+                    // 文件上传失败
+                    onUploadFailed: function (uploadInfo, code, message) {
+                        console.log("onUploadFailed: file:" + uploadInfo.file.name + ",code:" + code + ", message:" + message)
+                        $('#status').text('文件上传失败!')
+                    },
+                    // 取消文件上传
+                    onUploadCanceled: function (uploadInfo, code, message) {
+                        console.log("Canceled file: " + uploadInfo.file.name + ", code: " + code + ", message:" + message)
+                        $('#status').text('文件上传已暂停!')
+                    },
+                    // 文件上传进度，单位：字节, 可以在这个函数中拿到上传进度并显示在页面上
+                    onUploadProgress: function (uploadInfo, totalSize, progress) {
+                        console.log("onUploadProgress:file:" + uploadInfo.file.name + ", fileSize:" + totalSize + ", percent:" + Math.ceil(progress * 100) + "%")
+                        var progressPercent = Math.ceil(progress * 100)
+                        $('#auth-progress').text(progressPercent)
+                        $('#status').text('文件上传中...')
+                    },
+                    // 上传凭证超时
+                    onUploadTokenExpired: function (uploadInfo) {
+                        // 上传大文件超时, 如果是上传方式一即根据 UploadAuth 上传时
+                        // 需要根据 uploadInfo.videoId 调用刷新视频上传凭证接口(https://help.aliyun.com/document_detail/55408.html)重新获取 UploadAuth
+                        // 然后调用 resumeUploadWithAuth 方法, 这里是测试接口, 所以我直接获取了 UploadAuth
+                        $('#status').text('文件上传超时!')
+                        <%--var refreshUrl = "${ctximg}/video/refreshVideoId?videoId="+ uploadInfo.videoId;--%>
+                        let refreshUrl = "${ctximg}/video/refreshVideoId?videoId="+ uploadInfo.videoId;//refreshUrl = 'https://demo-vod.cn-shanghai.aliyuncs.com/voddemo/RefreshUploadVideo?BusinessType=vodai&TerminalType=pc&DeviceModel=iPhone9,2&UUID=59ECA-4193-4695-94DD-7E1247288&AppVersion=1.0.0&Title=haha1&FileName=xxx.mp4&VideoId=' + uploadInfo.videoId
+                        $.get(refreshUrl, function (data) {
+                            var uploadAuth = data.UploadAuth
+                            uploader.resumeUploadWithAuth(uploadAuth)
+                            console.log('upload expired and resume upload with uploadauth ' + uploadAuth)
+                        }, 'json')
+                    },
+                    // 全部文件上传结束
+                    onUploadEnd: function (uploadInfo) {
+                        $('#status').text('文件上传完毕!')
+                        // console.log("文件上传完毕"+uploadInfo.videoId)
+                        // $('#videourl').val(uploadInfo.videoId);
+                    }
+                })
+                return uploader
+            }
+
+            var uploader = null
+
+            $('#fileUpload').on('change', function (e) {
+                var file = e.target.files[0]
+                if (!file) {
+                    alert("请先选择需要上传的文件!")
+                    return
+                }
+                var Title = file.name
+                var userData = '{"Vod":{}}'
+                if (uploader) {
+                    uploader.stopUpload()
+                    $('#auth-progress').text('0')
+                    $('#status').text("")
+                }
+                uploader = createUploader()
+                // 首先调用 uploader.addFile(event.target.files[i], null, null, null, userData)
+                console.log(uploader)
+                uploader.addFile(file, null, null, null, userData)
+                $('#authUpload').attr('disabled', false)
+                $('#pauseUpload').attr('disabled', true)
+                $('#resumeUpload').attr('disabled', true)
+            })
+
+            // 第一种方式 UploadAuth 上传
+            $('#authUpload').on('click', function () {
+                // 然后调用 startUpload 方法, 开始上传
+                if (uploader !== null) {
+                    uploader.startUpload()
+                    $('#authUpload').attr('disabled', true)
+                    $('#pauseUpload').attr('disabled', false)
+                }
+            })
+
+            // 暂停上传
+            $('#pauseUpload').on('click', function () {
+                if (uploader !== null) {
+                    uploader.stopUpload()
+                    $('#resumeUpload').attr('disabled', false)
+                    $('#pauseUpload').attr('disabled', true)
+                }
+            })
+
+
+            $('#resumeUpload').on('click', function () {
+                if (uploader !== null) {
+                    uploader.startUpload()
+                    $('#resumeUpload').attr('disabled', true)
+                    $('#pauseUpload').attr('disabled', false)
+                }
+            })
+
+        })
 </script>
 </head>
 <body>
@@ -267,14 +443,19 @@
 									<tr class=" tr_fileType_control uploadVideo" style="display: none;">
 										<td>上传进度:</td>
 										<td style="text-align: left;">
-											<input type="file" id="fileupload" class="vam1" value="上传" name="blogrollimage" onchange="setBlogrollImageName(this)"/>
-											<%--<input type="file" name="blogrollimage" <span style="color: #ff0000">onchange="setBlogrollImageName(this)" </span>txlFillIn="isNotNull" title="链接图片">--%>
-
 
 											<font color="red vam ml10">请上传mp4文件</font>
 											<div id="fileQueue" class="mt10">
-												<input type="file" value="mp4" name="blogrollimage"  onchange="setBlogrollImageName(this)">
+												<input type="file" id="fileUpload" ><%--value="mp4" name="blogrollimage"  onchange="setBlogrollImageName(this)">--%>
 											</div>
+                                            <label class="status">上传状态: <span id="status"></span></label>
+                                            <div class="upload-type">
+                                                <button id="authUpload" disabled="true">开始上传</button>
+                                                <button id="pauseUpload" disabled="true">暂停</button>
+                                                <button id="resumeUpload" disabled="true">恢复上传</button>
+                                                <span class="progress">上传进度: <i id="auth-progress">0</i> %</span>
+                                                <span></span>
+                                            </div>
 										</td>
 									</tr>
 									<%--音频  开始--%>
