@@ -46,7 +46,7 @@
 							<span class="c-fff fsize24">${course.courseName}</span>
 						</h2>
 						<section class="c-attr-jg">
-							<span class="c-fff">价格：</span><big class="c-yellow">￥${course.currentPrice }</big> <span class="c-ccc ml10">原价：<s>￥${course.sourcePrice }</s></span>
+							<%--<span class="c-fff">价格：</span><big class="c-yellow">￥${course.currentPrice }</big> <span class="c-ccc ml10">原价：<s>￥${course.sourcePrice }</s></span>--%>
 						</section>
 						<section class="c-attr-mt c-attr-undis">
 							<span class="c-fff fsize14">主讲： <c:forEach items="${teacherList }" var="tea">
@@ -56,28 +56,36 @@
 							</span>
 						</section>
 						<section class="c-attr-mt c-attr-time">
-							<span class="c-fff fsize14">课程有效期：
+							<span class="c-fff fsize14">
 											<c:if test="${course.loseType==0 }">
-												<fmt:formatDate pattern="yyyy/MM/dd HH:mm"  value="${course.endTime}" />
+												<fmt:formatDate pattern="yyyy/MM/dd HH:mm"  value="" />
 											</c:if>
 											<c:if test="${course.loseType==1 }">
-													从购买之日起${course.loseTime }天
+
 												</span>
 											</c:if>
+							<%--<span class="c-fff fsize14">课程有效期：--%>
+											<%--<c:if test="${course.loseType==0 }">--%>
+												<%--<fmt:formatDate pattern="yyyy/MM/dd HH:mm"  value="${course.endTime}" />--%>
+											<%--</c:if>--%>
+											<%--<c:if test="${course.loseType==1 }">--%>
+													<%--从购买之日起${course.loseTime }天--%>
+												<%--</span>--%>
+											<%--</c:if>--%>
 							</span>
 						</section>
 						<section class="c-attr-mt">
 									<a href="javascript:void(0)" title="立即观看" onclick="if(isLogin()){ window.location.href='/uc/play/${course.courseId }'} else{lrFun();} " class="comm-btn c-btn-3">立即观看</a>
-							<span class="ml10"><tt class="c-yellow f-fM">*咨询 ${websitemap.web.phone}</tt></span>
+							<%--<span class="ml10"><tt class="c-yellow f-fM">*咨询 ${websitemap.web.phone}</tt></span>--%>
 						</section>
 						<section class="c-attr-mt of ml10">
-							<section class="kcShare pr fl hand vam">
+							<%--<section class="kcShare pr fl hand vam">
 								<tt>
 									<em class="icon18 shareIcon"></em><span class="vam c-fff f-fM">分享</span>
 								</tt>
 								<div id="bdshare" class="bdsharebuttonbox"><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
 								<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-							</section>
+							</section>--%>
 							<c:if test="${isFavorites==true }">
 										<span class="ml10 vam sc-end"><em class="icon18 scIcon"></em><a class="c-fff vam" title="收藏" onclick="" href="javascript:void(0)">已收藏</a></span>
 									</c:if>
@@ -154,6 +162,7 @@
 													<c:forEach items="${parentKpointList }" var="parentKpoint" varStatus="index">
 														<c:if test="${parentKpoint.kpointType==0 }"><!-- 文件目录 -->
 															<li class="lh-menu-stair">
+
 																<a href="javascript: void(0)" title="${parentKpoint.name }" 
 																	<c:if test="${index.first==true}">class="current-1"</c:if>
 																>
@@ -163,8 +172,10 @@
 																	<c:if test="${index.first==false}">style="display: none;"</c:if>
 																>
 																	<c:forEach items="${parentKpoint.kpointList}" var="sonKpoint">
-																		<li class="lh-menu-second ml30"><a href="javascript:void(0)" <%-- onclick="playVideo('${sonKpoint.videoUrl }',this)" --%> onclick="getPlayerHtml(${sonKpoint.kpointId },${sonKpoint.free },this)" title="">
-																				<span class="fr"> 
+																		<%--<li class="lh-menu-second ml30"><a href="javascript:void(0)" &lt;%&ndash; onclick="playVideo('${sonKpoint.videoUrl }',this)" &ndash;%&gt; onclick="getPlayerHtml(${sonKpoint.kpointId },${sonKpoint.free },this)" title="">--%>
+																		<%--onclick="if(isLogin()){ getPlayerHtml(${sonKpoint.kpointId },${sonKpoint.free },this)} else{lrFun();} " class="comm-btn c-btn-3"--%>
+																		<li class="lh-menu-second ml30"><a href="javascript:void(0)" onclick="if(isLogin()){ getPlayerHtml(${sonKpoint.kpointId },${sonKpoint.free },this)} else{lrFun();} " title="">
+																				<span class="fr">
 																					<c:if test="${sonKpoint.free==1 }">
 																						<tt class="free-icon vam mr10">免费试听</tt>
 																					</c:if>

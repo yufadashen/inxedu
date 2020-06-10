@@ -424,8 +424,8 @@
 										<td style="text-align: left;">
 											<select id="fileType" name="courseKpoint.fileType" onchange="chooseFileType()">
 												<option value="VIDEO">视频</option>
-												<option value="AUDIO">音频</option>
-												<option value="TXT">文本</option>
+												<%--<option value="AUDIO">音频</option>--%>
+												<%--<option value="TXT">文本</option>--%>
 											</select>
 										</td>
 									</tr>
@@ -442,7 +442,7 @@
 									</tr>
 									<tr class=" tr_fileType_control uploadVideo" style="display: none;">
 										<td>上传进度:</td>
-										<td style="text-align: left;">
+										<td class=" tr_fileType_control uploadVideo" style="text-align: left;">
 
 											<font color="red vam ml10">请上传mp4文件</font>
 											<div id="fileQueue" class="mt10">
@@ -502,10 +502,10 @@
 									<tr class="tr_all videoType">
 										<td>是否免费:</td>
 										<td style="text-align: left;" id="isfree">
-											<input type="radio" name="courseKpoint.free" value="1" />
-											是
 											<input type="radio" name="courseKpoint.free" value="2" />
 											否
+                                            <input type="radio" name="courseKpoint.free" value="1" />
+                                            是
 											<font color="red vam ml10">文档、文本格式、图片集、音频等格式暂不支持试听</font>
 										</td>
 									</tr>

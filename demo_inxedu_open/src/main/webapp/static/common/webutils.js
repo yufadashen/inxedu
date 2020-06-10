@@ -8,6 +8,7 @@ var uploadServerUrl="";//上传服务用服务器地址
  * 验证前台学员是否已经登录 
  * @returns true登录 false未登录
  */
+
 function isLogin(){
 	var is = false;
 	var user = getLoginUser();

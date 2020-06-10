@@ -485,6 +485,7 @@ function chooseFileType(){
 		$(".videoType").show();
         $(".uploadVideo").show();
         $(".uploadaudio").hide();
+        // $(".uploadaudio").hide();
         $("#videoUrlTitle").html("视频地址");
 		var videoType=$("#videotype").val();
 	}else if(fileType=='AUDIO'){//选择音频格式

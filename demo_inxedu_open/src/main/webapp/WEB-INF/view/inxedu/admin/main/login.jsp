@@ -28,8 +28,8 @@
 <body>
 	<div id="container">
 		<div class="logo">
-			<a href="/" target="_blank" title="因酷在线教育软件 - 在线教育整体解决方案提供商">
-				<img src="${ctx}/static/admin/assets/logo.png" width="200" alt="因酷在线教育软件 - 在线教育整体解决方案提供商" />
+			<a href="/" target="_blank" title="三才医药科技内训系统">
+				<img src="${ctx}/static/admin/assets/logo.png" width="200" alt="三才医药科技内训系统" />
 			</a>
 		</div>
 	</div>
@@ -60,7 +60,7 @@
 			</div>
 			<div class="login-foot">
 				<span>
-					Powered By <a target="_blank" href="http://www.inxedu.com/" style="color: #666;">${websitemap.web.company}</a>
+					Powered By <a target="_blank" href="/" style="color: #666;">${websitemap.web.company}</a>
 				</span>
 			</div>
 		</div>

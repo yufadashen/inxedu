@@ -145,7 +145,6 @@ function checkQuestionContent(obj){
 	if(title==""){
 		$(obj).next().html('<img width="16" height="16" alt="错误" src="'+baselocation+'/static/inxweb/img/c-icon.png">');
 	}else{
-		alert(); 
 		$(obj).next().html('<img width="16" height="16" alt="正确" src="'+baselocation+'/static/inxweb/img/d-icon.png">');
 	}
 }

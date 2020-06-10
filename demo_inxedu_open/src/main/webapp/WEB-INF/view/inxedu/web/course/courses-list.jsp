@@ -77,7 +77,7 @@
 						<ol class="js-tap clearfix">
 							<li <c:if test="${queryCourse.order=='FOLLOW'}">class="current bg-orange"</c:if>><a title="关注度" onclick="submitForm(3,'FOLLOW')" href="javascript:void(0)">关注度</a></li>
 							<li <c:if test="${queryCourse.order=='NEW'}">class="current bg-orange"</c:if>><a title="最新" onclick="submitForm(3,'NEW')" href="javascript:void(0)">最新</a></li>
-							<li <c:if test="${queryCourse.order=='ASCENDING'||queryCourse.order=='DESCENDING'}">class="current bg-orange"</c:if>><a title="价格" onclick="submitForm(4,'<c:if test="${not empty queryCourse.order}">${queryCourse.order }</c:if><c:if test="${empty queryCourse.order}">ONE</c:if>')" href="javascript:void(0)">价格<span><c:if test="${queryCourse.order=='ASCENDING' }">↑</c:if><c:if test="${queryCourse.order=='DESCENDING' }">↓</c:if></span></a></li>
+							<%--<li <c:if test="${queryCourse.order=='ASCENDING'||queryCourse.order=='DESCENDING'}">class="current bg-orange"</c:if>><a title="价格" onclick="submitForm(4,'<c:if test="${not empty queryCourse.order}">${queryCourse.order }</c:if><c:if test="${empty queryCourse.order}">ONE</c:if>')" href="javascript:void(0)">价格<span><c:if test="${queryCourse.order=='ASCENDING' }">↑</c:if><c:if test="${queryCourse.order=='DESCENDING' }">↓</c:if></span></a></li>--%>
 						</ol>
 					</section>
 				</div>
@@ -113,12 +113,12 @@
 											</h3>
 											<section class="mt10 hLh20 of">
 												<c:if test="${course.currentPrice=='0.00' }">
-													<span class="fr jgTag bg-green"><tt class="c-fff fsize12 f-fA">免费</tt></span>
+													<%--<span class="fr jgTag bg-green"><tt class="c-fff fsize12 f-fA">免费</tt></span>--%>
 												</c:if>
 												<c:if test="${course.currentPrice!='0.00' }">
-													<span class="fr jgTag bg-orange"><tt class="c-fff fsize14 f-fG">￥${course.currentPrice }</tt></span>
+													<%--<span class="fr jgTag bg-orange"><tt class="c-fff fsize14 f-fG">￥${course.currentPrice }</tt></span>--%>
 												</c:if>
-												<span class="fl jgAttr c-ccc f-fA"> <tt class="c-999 f-fA">${course.pageBuycount }人学习</tt> | <tt class="c-999 f-fA">${course.pageViewcount }浏览</tt>
+												<span class="fl jgAttr c-ccc f-fA"> <tt class="c-999 f-fA"></tt>  <tt class="c-999 f-fA">${course.pageViewcount }次浏览</tt>
 												</span>
 											</section>
 										</div>

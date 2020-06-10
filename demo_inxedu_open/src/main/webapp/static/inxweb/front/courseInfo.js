@@ -151,6 +151,6 @@ function vedioClick(freeVideoId){
 		// 播放视频
 		getPlayerHtml(freeVideoId,1,"");
 	}else{
-		dialog('提示',"该课程暂不支持试听!",1);
+		dialog('提示',"请选择需要播放的章节!",1);
 	}
 }

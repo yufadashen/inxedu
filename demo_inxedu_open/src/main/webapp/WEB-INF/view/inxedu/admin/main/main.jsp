@@ -173,8 +173,8 @@
 				<div id="top">
 					<!-- Logo -->
 					<div class="logo">
-						<a href="/" target="_blank" title="因酷在线教育软件 - 在线教育整体解决方案提供商" class="tooltip">
-							<img src="${ctx}/static/admin/assets/logo.png" height="60" alt="因酷在线教育软件 - 在线教育整体解决方案提供商" />
+						<a href="/" target="_blank" title="三才医药科技内训系统" class="tooltip">
+							<img src="${ctx}/static/admin/assets/logo.png" height="60" alt="三才医药科技内训系统" />
 						</a>
 					</div>
 					<!-- End of Logo -->

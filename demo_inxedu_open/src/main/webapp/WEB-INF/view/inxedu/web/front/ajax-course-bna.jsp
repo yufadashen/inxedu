@@ -21,15 +21,13 @@
 					</h3>
 					<section class="mt10 hLh20 of">
 						<c:if test="${course_bna.currentPrice=='0.00' }">
-							<span class="fr jgTag bg-green"><tt class="c-fff fsize12 f-fA">免费</tt></span>
+							<%--<span class="fr jgTag bg-green"><tt class="c-fff fsize12 f-fA">免费</tt></span>--%>
 						</c:if>
 						<c:if test="${course_bna.currentPrice!='0.00' }">
 							<span class="fr jgTag bg-orange"><tt class="c-fff fsize14 f-fG">￥${course_bna.currentPrice }</tt></span>
 						</c:if>
 						<span class="fl jgAttr c-ccc f-fA"> <tt class="c-999 f-fA">
-								<c:if test="${course_bna.currentPrice=='0.00' }">${course_bna.pageViewcount}</c:if><c:if test="${course_bna.currentPrice!='0.00' }">${course_bna.pageBuycount}</c:if>人学习
-							</tt> | <tt class="c-999 f-fA">
-								<c:if test="${course_bna.currentPrice=='0.00' }">${course_bna.pageViewcount}</c:if><c:if test="${course_bna.currentPrice!='0.00' }">${course_bna.pageViewcount}</c:if>评论
+								<c:if test="${course_bna.currentPrice=='0.00' }">${course_bna.pageViewcount}</c:if><c:if test="${course_bna.currentPrice!='0.00' }">${course_bna.pageViewcount}</c:if>次浏览
 							</tt>
 						</span>
 					</section>
