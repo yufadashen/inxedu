@@ -42,7 +42,7 @@ public class PlayAddress {
     /*获取播放地址函数*/
     public static GetPlayInfoResponse getPlayInfo(DefaultAcsClient client) throws Exception {
         GetPlayInfoRequest request = new GetPlayInfoRequest();
-        request.setVideoId("ce2f61cfd5664e1b8c90b052a3992594");
+        request.setVideoId("ce2f61cfd5664e1b8c90b052a3992594*");
         return client.getAcsResponse(request);
     }
 
@@ -50,7 +50,7 @@ public class PlayAddress {
     {
         // 点播服务接入区域
         String regionId = "cn-shanghai";
-        IClientProfile profile = DefaultProfile.getProfile(regionId,"LTAI4GD67VfJ34rgH5v6kGES", "DvlKyt5nJ9xj1hSDh2KrvgBw1lEOhJ");
+        IClientProfile profile = DefaultProfile.getProfile(regionId,"LTAI4G5TCYCdybuM2btJ9RXd*", "UFK0TIeB0xdVa1IAZtoBkUK9N76LqU*");
         return new DefaultAcsClient(profile);
     }
 }

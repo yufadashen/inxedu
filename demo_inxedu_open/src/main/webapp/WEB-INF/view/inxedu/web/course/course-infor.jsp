@@ -97,11 +97,11 @@
 				</aside>
 				<aside class="thr-attr-box">
 					<ol class="thr-attr-ol clearfix">
-						<li><p>&nbsp;</p>
+						<%--<li><p>&nbsp;</p>
 							<aside>
 								<span class="c-fff f-fM">购买数</span><br>
 								<h6 class="c-fff f-fM mt10">${course.pageBuycount }</h6>
-							</aside></li>
+							</aside></li>--%>
 						<li><p>&nbsp;</p>
 							<aside>
 								<span class="c-fff f-fM">课时数</span><br>

@@ -71,11 +71,11 @@ import java.net.URL;
 
 public class UploadVideoDemo {
     //账号AK信息请填写(必选)
-    private static final String accessKeyId = "LTAI4GD67VfJ34rgH5v6kGES";
+//    private static final String accessKeyId = "LTAI4G5TCYCdybuM2btJ9RXd";
     //账号AK信息请填写(必选)
-    private static final String accessKeySecret = "DvlKyt5nJ9xj1hSDh2KrvgBw1lEOhJ";
+//    private static final String accessKeySecret = "UFK0TIeB0xdVa1IAZtoBkUK9N76LqU";
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         // 一、视频文件上传
         // 视频标题(必选)
         String title = "测试标题4";
@@ -86,7 +86,7 @@ public class UploadVideoDemo {
         String fileName = "C://Users/admin/Desktop/40617d99767c26313b2502145b0f055b.mp4";
         // 本地文件上传
         testUploadVideo(accessKeyId, accessKeySecret, title, fileName);
-    }
+    }*/
 
     /**
      * 本地文件上传接口

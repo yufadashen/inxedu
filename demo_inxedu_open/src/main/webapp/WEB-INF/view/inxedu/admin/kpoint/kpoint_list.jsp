@@ -211,7 +211,7 @@
                     retryCount:  3,
                     retryDuration:  2,
                     region: "cn-shanghai",
-                    userId: "1753139843658599",
+                    userId: "1800191873308375",
                     // 添加文件成功
                     addFileSuccess: function (uploadInfo) {
                         console.log('addFileSuccess')
