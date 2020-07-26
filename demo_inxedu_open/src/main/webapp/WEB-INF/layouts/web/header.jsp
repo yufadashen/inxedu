@@ -20,19 +20,19 @@
 					<a href="javascript:lrFun(1)" title="登录">
 						<em class="icon18 login-icon">&nbsp;</em><span class="vam ml5">登录</span>
 					</a>
-					<%--|
+					|
 					<a href="javascript:lrFun(2)" title="注册">
 						</em><span class="vam ml5">注册</span>
-					</a>--%>
+					</a>
 				</li>
-					<li class="mr10 undis" id="is-login-one"><a href="${ctx}/uc/letter" title="消息" id="headerMsgCountId">
-							<em class="icon18 news-icon">&nbsp;</em>
-						</a><q class="red-point" style="display: none">&nbsp;</q></li>
-					<li class="h-r-user undis" id="is-login-two"><a href="${ctx}/uc/index" title="">
-							<img src="${ctx }/static/inxweb/img/avatar-boy.gif" width="30" height="30" class="vam picImg" alt="">
-							<span class="vam disIb" id="userName"></span>
-						</a>
-						<a href="javascript:void(0)" title="退出" onclick="exit();" class="ml5">退出</a></li>
+				<li class="mr10 undis" id="is-login-one"><a href="${ctx}/uc/letter" title="消息" id="headerMsgCountId">
+					<em class="icon18 news-icon">&nbsp;</em>
+				</a><q class="red-point" style="display: none">&nbsp;</q></li>
+				<li class="h-r-user undis" id="is-login-two"><a href="${ctx}/uc/index" title="">
+					<img src="${ctx }/static/inxweb/img/avatar-boy.gif" width="30" height="30" class="vam picImg" alt="">
+					<span class="vam disIb" id="userName"></span>
+				</a>
+					<a href="javascript:void(0)" title="退出" onclick="exit();" class="ml5">退出</a></li>
 				<!-- /未登录显示第1 li；登录后显示第2，3 li -->
 			</ul>
 			<aside class="h-r-search">
@@ -81,7 +81,7 @@
 		<section class="u-m-dd">
 			<ul>
 				<li>
-					<span>Wo的学习</span> 
+					<span>Wo的学习</span>
 					<ol>
 						<li class="current"><a href="javascript:void(0)" onclick="mobileHrefCheckLogin('${ctx }/uc/index')" title="">免费课程</a></li>
 						<li><a href="javascript:void(0)" onclick="mobileHrefCheckLogin('${ctx }/front/showcoulist')" title="">选课中心</a></li>
@@ -120,8 +120,8 @@
 	</div>
 </div>
 <script>
-	$(function() {
-		wmNavFun(); // 手机端导航方法
-		goTopFun(); //返回顶部
-	})
+    $(function() {
+        wmNavFun(); // 手机端导航方法
+        goTopFun(); //返回顶部
+    })
 </script>

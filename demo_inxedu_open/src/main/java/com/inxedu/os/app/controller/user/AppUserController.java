@@ -146,7 +146,7 @@ public class AppUserController extends BaseController{
 			user.setMobile(mobile);
 			user.setPassword(password);
 			user.setCreateTime(new Date());
-			user.setIsavalible(1);
+			user.setIsavalible(2);
 			user.setPassword(MD5.getMD5(user.getPassword()));
 			user.setMsgNum(0);
 			user.setSysMsgNum(0);
